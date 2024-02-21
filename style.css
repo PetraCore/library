@@ -8,6 +8,15 @@ html {
     font-family: "Neuton", serif;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+    
+    &:hover {
+        color: #EC7C7C;
+    }
+}
+
 .wrapper { 
     display: grid;
     justify-content: center;
@@ -129,4 +138,11 @@ html {
 
 .footer {
     gap: 5px;
+
+    & p,
+    & a {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 }
