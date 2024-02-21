@@ -27,6 +27,7 @@ html {
     background-color: #23272F;
     z-index: 1;
     gap: 10px;
+    font-size: 1.2rem;
 }
 
 .main {
