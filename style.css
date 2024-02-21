@@ -109,6 +109,12 @@ a {
     gap: 8px;
 }
 
+.deleteBookBtn:hover,
+.readBookBtn:hover,
+.unreadBookBtn:hover {
+    cursor: pointer;
+}
+
 .title {
     margin-top: 15px;
     font-size: 1.5rem;
