@@ -160,7 +160,7 @@ function activateLibraryButtons() {
         const title = document.querySelector('#title').value;
         const author = document.querySelector('#author').value;
         const pages = document.querySelector('#pages').value;
-        const read = document.querySelector('#read').value;
+        const read = document.querySelector('#read').checked;
 
         const book = addBookToLibrary(title, author, pages, read);
         openBookCreatorBtn.insertAdjacentHTML('beforebegin', generateBookHTML(book));
