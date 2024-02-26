@@ -137,7 +137,7 @@ function generateBookCreatorHTML() {
                 </div>
                 <div class="inputWrapper">
                     <label for="pages">Pages</label>
-                    <input type="number" name="pages" id="pages" min="0" placeholder="671" required>
+                    <input type="number" name="pages" id="pages" min="0" max="1000000" placeholder="671" required>
                 </div>
                 <div class="inputWrapper">
                     <label for="read">I finished reading the book</label>
