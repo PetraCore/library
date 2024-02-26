@@ -44,7 +44,7 @@ a {
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     justify-content: center;
     justify-items: center;
-    gap: 25px;
+    gap: 50px 25px;
     padding: 30px;
 }
 
