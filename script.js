@@ -29,19 +29,18 @@ const myLibrary = [
     }
 ];
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
+class Book {
+    constructor(title, author, pages, read = false) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 
-function addBookToLibrary(title, author, pages, read = false) {
-    const book = new Book(title, author, pages, read);
-    book.id = myLibrary.length;
-    myLibrary.push(book);
-
-    return book;
+    addBookToLibrary(library) {
+        this.id = library.length; 
+        library.push(this);
+    }
 }
 
 function assignBookIDs() {
@@ -191,7 +190,8 @@ function activateLibraryButtons() {
         const pages = document.querySelector('#pages').value;
         const read = document.querySelector('#read').checked;
 
-        const book = addBookToLibrary(title, author, pages, read);
+        const book = new Book(title, author, pages, read);
+        book.addBookToLibrary(myLibrary);
         openBookCreatorBtn.insertAdjacentHTML('beforebegin', generateBookHTML(book));
 
         const bookElement = document.querySelector('.book:has(+#openBookCreatorBtn)');
