@@ -1,34 +1,3 @@
-const myLibrary = [
-    {
-        title: 'The Hobbit',
-        author: 'J. R. R. Tolkien',
-        read: true,
-        pages: 300,
-        id: 0,
-    },
-    {
-        title: 'The Last Wish',
-        author: 'Andrzej Sapkowski',
-        read: true,
-        pages: 384,
-        id: 1,
-    },
-    {
-        title: 'Surely You\'re Joking, Mr. Feynman!',
-        author: 'Ralph Leighton and Richard Feynman',
-        read: true,
-        pages: 400,
-        id: 2,
-    },
-    {
-        title: 'A Short History of Nearly Everything',
-        author: 'Bill Bryson',
-        read: false,
-        pages: 544,
-        id: 3,
-    }
-];
-
 class Book {
     constructor(title, author, pages, read = false) {
         this.title = title;
@@ -36,18 +5,52 @@ class Book {
         this.pages = pages;
         this.read = read;
     }
+}
 
-    addBookToLibrary(library) {
-        this.id = library.length; 
-        library.push(this);
+class Library {
+    constructor() {
+        this._books = [];
+    }
+
+    get books() {
+        return this._books;
+    }
+
+    addBook(book) {
+        this._books.push(book);
+    }
+
+    getBook(id) {
+        return this._books[id];
+    }
+
+    getBooks() {
+        return this._books;
+    }
+
+    removeBook(id) {
+        this._books.splice(id, 1);
+    }
+
+    toggleBookStatus(id) {
+        const book = this.getBook(id);
+        const flippedReadState = !book.read;
+
+        book.read = flippedReadState;
+        return flippedReadState;
     }
 }
+
+const myLibrary = new Library();
+myLibrary.addBook(new Book('The Hobbit', 'J. R. R. Tolkien', 300, true));
+myLibrary.addBook(new Book('The Last Wish', 'Andrzej Sapkowski', 384, true));
+myLibrary.addBook(new Book('Surely You\'re Joking Mr Freeman', 'Ralph Leighton and Richard Feynman', 400, true));
+myLibrary.addBook(new Book('A Short History of Nearly Everything', 'Bill Bryson', 544));
 
 function assignBookIDs() {
     const loadedBooks = document.querySelectorAll('.book');
 
-    for (let i = 0; i < myLibrary.length; i++) {
-        myLibrary[i].id = i;
+    for (let i = 0; i < myLibrary.getBooks().length; i++) {
         loadedBooks[i].dataset.id = i;
     }
 }
@@ -57,7 +60,7 @@ function removeBookFromLibrary(event) {
     const id = book.dataset.id;
 
     book.remove();
-    myLibrary.splice(id, 1);
+    myLibrary.removeBook(id);
 
     assignBookIDs();
 };
@@ -65,8 +68,7 @@ function removeBookFromLibrary(event) {
 function toggleBookStatus(event) {
     const bookElement = event.target.closest('.book');
     const id = bookElement.dataset.id;
-    const flippedReadState = !myLibrary[id].read;
-    myLibrary[id].read = flippedReadState;
+    const flippedReadState = myLibrary.toggleBookStatus(id);
 
     bookStatusElement = bookElement.querySelector('.status');
     if(flippedReadState) {
@@ -151,7 +153,7 @@ function generateBookCreatorHTML() {
 function generateLibraryHTML() {
     htmlCode = '';
 
-    myLibrary.forEach(book => {
+    myLibrary.books.forEach(book => {
         htmlCode += generateBookHTML(book);
     });
 
@@ -191,7 +193,7 @@ function activateLibraryButtons() {
         const read = document.querySelector('#read').checked;
 
         const book = new Book(title, author, pages, read);
-        book.addBookToLibrary(myLibrary);
+        myLibrary.addBook(book);
         openBookCreatorBtn.insertAdjacentHTML('beforebegin', generateBookHTML(book));
 
         const bookElement = document.querySelector('.book:has(+#openBookCreatorBtn)');
@@ -210,6 +212,7 @@ function activateLibraryButtons() {
 function loadLibrary() {
     const libraryContainer = document.querySelector('#library');
     libraryContainer.innerHTML = generateLibraryHTML();
+    assignBookIDs();
     activateLibraryButtons();
 }
 
